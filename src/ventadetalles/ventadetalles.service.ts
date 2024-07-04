@@ -14,23 +14,12 @@ export class VentadetallesService {
 
 
   async create(createVentadetalleDto: CreateVentadetalleDto):Promise<Ventadetalle> {
-    const existe=await this.ventadetallesRepository.findOne({
-      where:{
-        venta:{id:createVentadetalleDto.idVenta},
-        producto:{id:createVentadetalleDto.idProducto}
-      },
-      relations:['venta','producto']
-     
-    });
-    if(existe){
-      throw new ConflictException(`El venta de detalle ya existe`);
-    }
     const ventadetalle=this.ventadetallesRepository.create({
       cantidad:createVentadetalleDto.cantidad.trim(),
       subtotal:createVentadetalleDto.subtotal.trim(),
       venta:{id:createVentadetalleDto.idVenta},
       producto:{id:createVentadetalleDto.idProducto}
-
+     
     });
     return this.ventadetallesRepository.save(ventadetalle)
   }

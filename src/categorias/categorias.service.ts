@@ -11,17 +11,16 @@ export class CategoriasService {
   constructor(
     @InjectRepository(Categoria) private categoriasRepository: Repository<Categoria>) { }
 
+
+    
   async create(createCategoriaDto: CreateCategoriaDto): Promise<Categoria> {
-    const existe = await this.categoriasRepository.findOneBy({
+    const categoria = this.categoriasRepository.create({
       nombre: createCategoriaDto.nombre.trim(),
     })
-    if (existe) {
-      throw new ConflictException(`La categoria ya existe`)
-    }
-    return this.categoriasRepository.save({
-      nombre: createCategoriaDto.nombre.trim()
-    });
+    return this.categoriasRepository.save(categoria)
   }
+
+
 
   async findAll(): Promise<Categoria[]> {
 

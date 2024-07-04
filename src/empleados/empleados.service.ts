@@ -13,29 +13,14 @@ export class EmpleadosService {
     ) { }
 
   async create(createEmpleadoDto: CreateEmpleadoDto): Promise<Empleado> {
-    const existe = await this.empleadosRepository.findOne({
-      where: {
-        nombres: createEmpleadoDto.nombres.trim(),
-        usuario: { id: createEmpleadoDto.idUsuario },
-      },
-      relations: ['usuario'],
-    })
-
-
-    if (existe) {
-      throw new ConflictException(`El empleado ya existe`)
-    }
-
-    const empleado = this.empleadosRepository.create({
+    const  empleado = this.empleadosRepository.create({
       nombres: createEmpleadoDto.nombres.trim(),
       apellidos: createEmpleadoDto.apellidos.trim(),
       cargo: createEmpleadoDto.cargo.trim(),
       salario: createEmpleadoDto.salario,
       fechaContratacion: createEmpleadoDto.fechaContratacion,
       usuario: { id: createEmpleadoDto.idUsuario }
-
-    });
-
+    })
     return this.empleadosRepository.save(empleado)
   }
 

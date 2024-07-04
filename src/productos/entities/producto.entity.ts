@@ -1,5 +1,6 @@
 import { Categoria } from "src/categorias/entities/categoria.entity";
 import { Ventadetalle } from "src/ventadetalles/entities/ventadetalle.entity";
+import { Venta } from "src/ventas/entities/venta.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('productos')
@@ -34,6 +35,9 @@ export class Producto {
     //un producto puede tener varios ventas de detalle
     @OneToMany(()=>Ventadetalle,ventadetalle=>ventadetalle.producto)
     ventadetalles:Ventadetalle[];
+
+    @OneToMany(()=>Venta,venta=>venta.producto)
+    ventas:Venta[];
     
 
 }
